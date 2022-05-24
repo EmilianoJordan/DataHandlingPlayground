@@ -1,0 +1,23 @@
+version: '3.8'
+services:
+  shell:
+    build:
+      context: ./
+    image: playground:latest
+    command: [ ]
+    entrypoint: [ ]
+    depends_on:
+      - db
+    volumes:
+      - ./:/src
+  db:
+    image: mdillon/postgis:9.6-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_DB: playground
+    volumes:
+      - db_data:/var/lib/postgresql
+
+volumes:
+  db_data:
