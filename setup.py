@@ -4,7 +4,13 @@ setup(
     name="example",
     version="0.1.0",
     packages=find_packages(include=["dhp", "dhp.*"]),
-    install_requires=["pandas>=1.4.2", "sqlalchemy>=1.4.36", "flask>=2.1.2"],
+    install_requires=[
+        "alembic~=1.8",
+        "flask~=2.1",
+        "pandas~=1.4",
+        "sqlalchemy~=1.4",
+        "psycopg2-binary~=2.9",
+    ],
     extras_require={
         "dev": ["pytest"],
     },
