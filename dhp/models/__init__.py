@@ -1,1 +1,1 @@
-from dhp.models.datamodel import BaseData
+from dhp.models.datamodel import Data
