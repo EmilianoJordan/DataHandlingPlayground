@@ -10,7 +10,7 @@ setup(
         "pandas~=1.4",
         "sqlalchemy~=1.4",
         "psycopg2-binary~=2.9",
-        "matplotlib~=3.5"
+        "matplotlib~=3.5",
     ],
     extras_require={
         "dev": ["pytest", "ipython"],

@@ -1,8 +1,8 @@
 import uuid
 
-from sqlalchemy import Column, Enum, String, DateTime, func, ForeignKey, Table, MetaData
+from sqlalchemy import Column, DateTime, Enum, ForeignKey, String, Table, func
 from sqlalchemy.dialects.postgresql import UUID
-from sqlalchemy.orm import relationship, registry
+from sqlalchemy.orm import relationship
 
 from dhp.models._base import Base
 from dhp.models._data_readers import DATA_READERS, DataIO
@@ -10,13 +10,13 @@ from dhp.models._data_readers import DATA_READERS, DataIO
 data_edge = Table(
     "data_edge",
     Base.metadata,
-    Column("source_data", UUID, ForeignKey('data.id'), primary_key=True),
-    Column("derived_data", UUID, ForeignKey('data.id'), primary_key=True),
+    Column("source_data", UUID, ForeignKey("data.id"), primary_key=True),
+    Column("derived_data", UUID, ForeignKey("data.id"), primary_key=True),
 )
 
 
 class Data(Base):
-    __tablename__ = 'data'
+    __tablename__ = "data"
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
 
     # #################### #
@@ -27,7 +27,7 @@ class Data(Base):
     __mapper_args__ = {
         "polymorphic_identity": "base_data",
         "polymorphic_on": type,
-        'with_polymorphic': '*'  # Eager load subclass attributes by default.
+        "with_polymorphic": "*",  # Eager load subclass attributes by default.
     }
 
     # #################### #
@@ -60,9 +60,9 @@ class Data(Base):
     source_data = relationship(
         "DirectedEdge",
         secondary=data_edge,
-        primaryjoin = id == data_edge.c.derived_data,
-        secondaryjoin = id == data_edge.c.source_data,
-        backref="derived_data"
+        primaryjoin=id == data_edge.c.derived_data,
+        secondaryjoin=id == data_edge.c.source_data,
+        backref="derived_data",
     )
 
 
