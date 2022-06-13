@@ -9,8 +9,16 @@ RUN apt-get update \
 RUN mkdir -p /src
 WORKDIR /src
 
-COPY setup.py setup.py
+RUN pip install --upgrade pip poetry
+RUN poetry config virtualenvs.create false
+RUN poetry config experimental.new-installer false
 
-RUN pip install -e ".[dev]"
+COPY pyproject.toml pyproject.toml
+COPY poetry.lock poetry.lock
+
+RUN poetry install
+COPY ./ /sure/
+RUN poetry install
+
 
 CMD ["/bin/bash"]
