@@ -1,8 +1,8 @@
-"""empty message
+"""Initialize data, data_edge tables
 
-Revision ID: 2926d49440b9
+Revision ID: 48f55a36b7b1
 Revises:
-Create Date: 2022-06-12 15:13:38.443351-07:00
+Create Date: 2022-06-21 23:08:18.093973-07:00
 
 """
 import sqlalchemy as sa
@@ -10,7 +10,7 @@ from alembic import op
 from sqlalchemy.dialects import postgresql
 
 # revision identifiers, used by Alembic.
-revision = "2926d49440b9"
+revision = "48f55a36b7b1"
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -23,7 +23,6 @@ def upgrade() -> None:
         sa.Column("id", postgresql.UUID(as_uuid=True), nullable=False),
         sa.Column("type", sa.String(length=50), nullable=True),
         sa.Column("_data_file", sa.String(length=260), nullable=True),
-        sa.Column("_data_io", sa.Enum("PANDAS_HDF", name="dataio"), nullable=True),
         sa.Column(
             "time_created",
             sa.DateTime(timezone=True),
@@ -31,21 +30,23 @@ def upgrade() -> None:
             nullable=True,
         ),
         sa.Column("time_updated", sa.DateTime(timezone=True), nullable=True),
+        sa.Column("time_deleted", sa.DateTime(timezone=True), nullable=True),
         sa.PrimaryKeyConstraint("id"),
     )
     op.create_table(
         "data_edge",
-        sa.Column("source_data", postgresql.UUID(), nullable=False),
-        sa.Column("derived_data", postgresql.UUID(), nullable=False),
+        sa.Column("source_data_id", postgresql.UUID(), nullable=False),
+        sa.Column("derived_data_id", postgresql.UUID(), nullable=False),
+        sa.Column("extra_data", sa.String(length=50), nullable=True),
         sa.ForeignKeyConstraint(
-            ["derived_data"],
+            ["derived_data_id"],
             ["data.id"],
         ),
         sa.ForeignKeyConstraint(
-            ["source_data"],
+            ["source_data_id"],
             ["data.id"],
         ),
-        sa.PrimaryKeyConstraint("source_data", "derived_data"),
+        sa.PrimaryKeyConstraint("source_data_id", "derived_data_id"),
     )
     # ### end Alembic commands ###
 

@@ -512,6 +512,19 @@ tomli = ">=1.0.0"
 testing = ["argcomplete", "hypothesis (>=3.56)", "mock", "nose", "pygments (>=2.7.2)", "requests", "xmlschema"]
 
 [[package]]
+name = "pytest-alembic"
+version = "0.8.2"
+description = "A pytest plugin for verifying alembic migrations."
+category = "dev"
+optional = false
+python-versions = ">=3.6,<4"
+
+[package.dependencies]
+alembic = "*"
+pytest = ">=1.0"
+sqlalchemy = "*"
+
+[[package]]
 name = "python-dateutil"
 version = "2.8.2"
 description = "Extensions to the standard Python datetime module"
@@ -682,7 +695,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.9,<3.11"
-content-hash = "1f44e93b542a4c2d59e515144424458e15488e8ce04169ce0123094c3c15766c"
+content-hash = "18303567bff3cb095a85b1289bbb3416eed8c207a302164dc9f9f87764de7e71"
 
 [metadata.files]
 alembic = [
@@ -1170,6 +1183,10 @@ pyparsing = [
 pytest = [
     {file = "pytest-7.1.2-py3-none-any.whl", hash = "sha256:13d0e3ccfc2b6e26be000cb6568c832ba67ba32e719443bfe725814d3c42433c"},
     {file = "pytest-7.1.2.tar.gz", hash = "sha256:a06a0425453864a270bc45e71f783330a7428defb4230fb5e6a731fde06ecd45"},
+]
+pytest-alembic = [
+    {file = "pytest-alembic-0.8.2.tar.gz", hash = "sha256:4ce3992cb4d23b2720fdfabd595246ccc69c61e9ee64ec77492ed3b95ad624da"},
+    {file = "pytest_alembic-0.8.2-py3-none-any.whl", hash = "sha256:957be767984ae8733eb27a3ac94d5a5d0886796cc677aff85861f8678608bf47"},
 ]
 python-dateutil = [
     {file = "python-dateutil-2.8.2.tar.gz", hash = "sha256:0123cacc1627ae19ddf3c27a5de5bd67ee4586fbdd6440d9748f8abb483d3e86"},

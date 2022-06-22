@@ -9,18 +9,18 @@ import pandas as pd
 @click.option("--channels", default=5, help="Number of Channels to include in the file")
 @click.option(
     "--path",
-    default="files/test_data.h5",
+    default="._data_files/test_data.h5",
     help="File to save to. If the file exists a valid intiger "
     "will be appended to the file stem.",
 )
 def generate_sample_test_file(channels, path):
+
     sampling_freq = 4_000
     sample_spacing = 1 / sampling_freq
-    start_freq = 10
     stop_freq = sampling_freq // 2
-    freq_content = np.array(range(start_freq, stop_freq + 1))
-    sample_duration = 5
-    rng = np.random.default_rng()
+    freq_content = np.array(range(stop_freq + 1))
+    sample_duration = 5  # in seconds
+    rng = np.random.default_rng()  # random number generator
 
     # Index for out test file is the time steps in seconds
     index = np.arange(0, sample_duration + sample_spacing, sample_spacing)
@@ -37,7 +37,7 @@ def generate_sample_test_file(channels, path):
     output_df = pd.DataFrame(0.0, index=index, columns=channel_names)
 
     # create an overall shape to the PSD, smc breakpoints
-    shape = pd.Series(150, index=pd.RangeIndex(start_freq, stop_freq + 1))
+    shape = pd.Series(150, index=pd.RangeIndex(stop_freq + 1))
     shape[shape.index >= 800] = 800 / shape.index[shape.index >= 800] * 150
     shape[shape.index <= 150] = shape.index[shape.index <= 150]
 
@@ -47,16 +47,16 @@ def generate_sample_test_file(channels, path):
         # Create a random amplitude for each freq.
         random_amplitude = rng.random(len(freq_content)) * shape
 
-        channel_df = df.add(random_start)
-        channel_df = channel_df.apply(np.sin)
-        channel_df = channel_df.mul(random_amplitude)
-
+        # Apply the randomness
         # Sum the content of all the generated sine waves for a sudo random signal
-        output_df[channel] = channel_df.sum(axis=1)
+        output_df[channel] = (
+            df.add(random_start).apply(np.sin).mul(random_amplitude).sum(axis=1)
+        )
 
     # file saving
     output_path = Path(path)
     while output_path.is_file():
+        # Create a unique file path by appending a three digit version e.g. _001
         version = output_path.stem.split("_")[-1]
         stem = output_path.stem.split("_")[:-1]
 
