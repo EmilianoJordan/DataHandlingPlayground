@@ -1,4 +1,4 @@
-FROM python:3.9.8-slim-buster AS base
+FROM python:3.10-slim-buster AS base
 
 RUN apt-get update \
     && apt-get upgrade -y

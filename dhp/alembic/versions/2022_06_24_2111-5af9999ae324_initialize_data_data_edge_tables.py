@@ -1,8 +1,9 @@
 """Initialize data, data_edge tables
 
-Revision ID: 48f55a36b7b1
+
+Revision ID: 5af9999ae324
 Revises:
-Create Date: 2022-06-21 23:08:18.093973-07:00
+Create Date: 2022-06-24 21:11:10.939769-07:00
 
 """
 import sqlalchemy as sa
@@ -10,7 +11,7 @@ from alembic import op
 from sqlalchemy.dialects import postgresql
 
 # revision identifiers, used by Alembic.
-revision = "48f55a36b7b1"
+revision = "5af9999ae324"
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -21,8 +22,8 @@ def upgrade() -> None:
     op.create_table(
         "data",
         sa.Column("id", postgresql.UUID(as_uuid=True), nullable=False),
-        sa.Column("type", sa.String(length=50), nullable=True),
-        sa.Column("_data_file", sa.String(length=260), nullable=True),
+        sa.Column("_type", sa.String(length=50), nullable=True),
+        sa.Column("data", sa.PickleType(), nullable=False),
         sa.Column(
             "time_created",
             sa.DateTime(timezone=True),
