@@ -9,24 +9,9 @@ from dhp.models._base import Base
 
 class DataEdge(Base):
     __tablename__ = "data_edge"
-    source_data_id = Column(UUID, ForeignKey("data.id"), primary_key=True)
-    derived_data_id = Column(UUID, ForeignKey("data.id"), primary_key=True)
-    extra_data = Column(String(50))
-
-
-# data_meta_data_association_table = Table(
-#     'data_meta_data_association_table',
-#     Base.metadata,
-#     Column("left_id", UUID, ForeignKey("left.id"), primary_key=True),
-#     Column("right_id", UUID, ForeignKey("right.id"), primary_key=True),
-# )
-#
-# data_edge_meta_data_association_table = Table(
-#     'data_edge_meta_data_association_table',
-#     Base.metadata,
-#     Column("left_id", UUID, ForeignKey("left.id"), primary_key=True),
-#     Column("right_id", UUID, ForeignKey("right.id"), primary_key=True),
-# )
+    source_data_id = Column(ForeignKey("data.id"), primary_key=True)
+    derived_data_id = Column(ForeignKey("data.id"), primary_key=True)
+    meta_data = Column(String(50))
 
 
 class Data(Base):
@@ -62,14 +47,6 @@ class Data(Base):
     )
 
 
-# class MetaData(Base):
-#     __tablename__ = "meta_data"
-#     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-#
-#     key = Column(String(260), nullable=False)
-#     value = Column(PickleType, nullable=False)
-
-
 class TestData(Data):
     __mapper_args__ = {
         "polymorphic_identity": "test_data",
@@ -85,4 +62,10 @@ class TimeHistory(Data):
 class PSD(Data):
     __mapper_args__ = {
         "polymorphic_identity": "random_vibe_psd",
+    }
+
+
+class FRF(Data):
+    __mapper_args__ = {
+        "polymorphic_identity": "frf",
     }

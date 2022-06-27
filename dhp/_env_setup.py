@@ -35,3 +35,7 @@ if not DB_URL:
         f"{DB_USER}:{quote_plus(DB_PASS)}@"
         f"{DB_HOST}:{DB_PORT}/{DB_NAME}"
     )
+
+
+CELERY_BROKER = os.environ.get("CELERY_BROKER", "redis://redis:6379/0")
+CELERY_BACKEND = os.environ.get("CELERY_BACKEND", "redis://redis:6379/0")

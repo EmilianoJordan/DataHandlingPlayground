@@ -6,6 +6,8 @@ RUN apt-get update \
 #    psycopg2 \
 #    --no-install-recommends
 
+ENV PYTHONUNBUFFERED 1
+
 RUN mkdir -p /src
 WORKDIR /src
 
